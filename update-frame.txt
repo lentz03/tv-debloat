@@ -1,0 +1,17 @@
+# update-frame.txt — Gallery Home 2.2: frame hugs each painting with an even mat. Run: tv.sh apply update-frame.txt
+say Installing Gallery Home 2.2
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 10
+expect tv.galleryhome
+running tv.galleryhome
+shot 30-frame-a
+say Two more paintings to check different shapes
+launch tv.galleryhome/.HomeActivity --es source art
+wait 25
+shot 31-frame-b
+launch tv.galleryhome/.HomeActivity --es source art
+wait 25
+shot 32-frame-c

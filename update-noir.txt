@@ -1,0 +1,36 @@
+# update-noir.txt — Gallery Home 3.2: clock fix, no glow box, Wallpaper mode, better space/city/landscape picks.
+# Run: tv.sh apply update-noir.txt
+say Installing Gallery Home 3.2
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 30
+expect tv.galleryhome
+running tv.galleryhome
+shot 50-home
+say Next wallpapers
+launch tv.galleryhome/.HomeActivity --ez next true
+wait 30
+shot 51-next
+launch tv.galleryhome/.HomeActivity --ez next true
+wait 30
+shot 52-next
+launch tv.galleryhome/.HomeActivity --ez next true
+wait 30
+shot 53-next
+say Wallpaper mode
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 54-wallpaper-mode
+key KEYCODE_DPAD_CENTER
+wait 3
+shot 55-back-to-hud
+say Screensaver
+launch com.android.systemui/.Somnambulator
+wait 15
+shot 56-screensaver
+key KEYCODE_HOME
+wait 3
+expect tv.galleryhome
+diag

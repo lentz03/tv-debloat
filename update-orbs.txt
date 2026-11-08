@@ -1,0 +1,43 @@
+# update-orbs.txt — Gallery Home 4.0 "Glass Orbs" (app logos, Big Shoulders clock). Run: tv.sh apply update-orbs.txt
+say Installing Gallery Home 4.0
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+shot 60-orbs-home
+key KEYCODE_DPAD_RIGHT
+wait 2
+shot 61-orbs-focus-netflix
+key KEYCODE_DPAD_RIGHT
+key KEYCODE_DPAD_RIGHT
+key KEYCODE_DPAD_RIGHT
+key KEYCODE_DPAD_RIGHT
+key KEYCODE_DPAD_RIGHT
+wait 2
+shot 62-orbs-focus-wallpaper
+say Wallpaper mode
+key KEYCODE_DPAD_CENTER
+wait 4
+shot 63-orbs-wallpaper-mode
+key KEYCODE_DPAD_CENTER
+wait 2
+say All apps
+key KEYCODE_DPAD_RIGHT
+key KEYCODE_DPAD_RIGHT
+wait 1
+key KEYCODE_DPAD_CENTER
+wait 3
+shot 64-orbs-apps
+key KEYCODE_BACK
+wait 1
+say Screensaver
+launch com.android.systemui/.Somnambulator
+wait 15
+shot 65-orbs-screensaver
+key KEYCODE_HOME
+wait 3
+expect tv.galleryhome
+diag

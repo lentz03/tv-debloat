@@ -1,0 +1,14 @@
+# update-art.txt — Gallery Home v1.1: museum art only (Art Institute of Chicago,
+# Cleveland Museum of Art, Wikimedia Commons paintings). Run: tv.sh apply update-art.txt
+say Installing Gallery Home 1.1
+install GalleryHome.apk tv.galleryhome
+launch tv.galleryhome/.HomeActivity --es source art
+wait 45
+expect tv.galleryhome
+running tv.galleryhome
+shot 04-art-v1.1
+say Waiting for the next picture to check the rotation…
+launch tv.galleryhome/.HomeActivity --es source art
+wait 30
+shot 05-art-v1.1-next
+diag

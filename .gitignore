@@ -1,0 +1,16 @@
+# --- kept on this Mac only, never uploaded ---
+# Google's adb tools (re-download from developer.android.com if needed)
+platform-tools/
+# TV backups: screenshots, package lists, device details (restore.sh needs these locally)
+tv-backup-*/
+# the TV's current IP address
+.tv_target
+# Gallery Home's signing key: back this up somewhere safe instead (see README.md)
+signing/
+*.jks
+# zip copy of the source (the real source is in launcher/)
+launcher-src.zip
+# build output if you ever build on this Mac
+launcher/build/
+# macOS clutter
+.DS_Store

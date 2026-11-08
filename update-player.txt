@@ -1,0 +1,35 @@
+# update-player.txt — Gallery Home 5.1: Nest Mini mini player ("Clock Column").
+# Run: tv.sh apply update-player.txt   (uses test hooks only; never presses OK)
+say Installing Gallery Home 5.1 (Nest Mini mini player)
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+say Sample song (test only) to check the layout
+launch tv.galleryhome/.HomeActivity --ez nestdemo true
+wait 3
+shot 90-player-demo
+launch tv.galleryhome/.HomeActivity --ez nestfocus true
+wait 3
+shot 91-player-focused
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 3
+shot 92-wallpaper-mode-player
+key KEYCODE_BACK
+wait 2
+say Screensaver with the sample song
+launch com.android.systemui/.Somnambulator
+wait 12
+shot 93-screensaver-player
+key KEYCODE_HOME
+wait 3
+launch tv.galleryhome/.HomeActivity --ez nestdemo false
+wait 2
+say Now the real speaker: whatever the Nest Mini is playing should appear within about 15 seconds
+wait 20
+shot 94-player-live
+expect tv.galleryhome
+diag

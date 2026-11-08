@@ -1,0 +1,20 @@
+# update-player-fix.txt — Gallery Home 5.1.1: finds the Nest Mini by its IPv4 address.
+# Keep music playing on the Nest Mini while this runs. Run: tv.sh apply update-player-fix.txt
+say Installing Gallery Home 5.1.1
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 20
+expect tv.galleryhome
+running tv.galleryhome
+say Whatever the Nest Mini is playing should now be under the forecast
+wait 10
+shot 95-player-live
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 96-wallpaper-mode-live
+key KEYCODE_BACK
+wait 2
+expect tv.galleryhome
+diag

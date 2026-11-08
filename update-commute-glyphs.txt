@@ -1,0 +1,18 @@
+# update-commute-glyphs.txt — Gallery Home 5.5.1: Steps with route fits its columns; no cut-off label.
+# Run: tv.sh apply update-commute-glyphs.txt   (never presses OK; leaves the board on Journey line + Ink)
+say Installing Gallery Home 5.5.1
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+launch tv.galleryhome/.HomeActivity --es commutejourney glyphs --es commutebg ink --es open gh:commute
+wait 15
+shot 140-journey-glyphs
+key KEYCODE_BACK
+wait 3
+launch tv.galleryhome/.HomeActivity --es commutejourney line
+wait 2
+expect tv.galleryhome
+diag

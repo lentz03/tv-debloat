@@ -1,0 +1,38 @@
+# update-line.txt — Gallery Home 4.2 "Logo Line" dock + Big Shoulders clock. Run: tv.sh apply update-line.txt
+# (Uses direct test hooks instead of pressing OK, so it can't wander into other TV menus.)
+say Installing Gallery Home 4.2
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 12
+expect tv.galleryhome
+running tv.galleryhome
+shot 70-line-home
+launch tv.galleryhome/.HomeActivity --ei focus 1
+wait 2
+shot 71-line-focus-netflix
+launch tv.galleryhome/.HomeActivity --ei focus 6
+wait 2
+shot 72-line-focus-wallpaper
+say Wallpaper mode
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 3
+shot 73-line-wallpaper-mode
+key KEYCODE_BACK
+wait 2
+shot 74-line-back
+say All apps
+launch tv.galleryhome/.HomeActivity --ez apps true
+wait 3
+shot 75-line-apps
+key KEYCODE_BACK
+wait 1
+say Screensaver
+launch com.android.systemui/.Somnambulator
+wait 12
+shot 76-line-screensaver
+key KEYCODE_HOME
+wait 3
+expect tv.galleryhome
+diag

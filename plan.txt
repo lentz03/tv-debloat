@@ -1,0 +1,52 @@
+# plan.txt (v2) — Panasonic / SCBC R4, Android TV 11.  Run: tv.sh apply plan.txt
+# Every change is logged to the backup's changes.log and undone by restore.sh.
+# Gallery Home is already installed (step 1 of v1 succeeded).
+
+say Step 1: make Gallery Home the home screen and check it runs (stock launcher still on)
+home tv.galleryhome/.HomeActivity
+launch tv.galleryhome/.HomeActivity
+wait 8
+expect tv.galleryhome
+running tv.galleryhome
+shot 01-gallery-home-first-launch
+wait 20
+shot 02-gallery-home-after-20s
+
+say Step 2: ads, recommendations, telemetry and auto-installers
+disable com.google.android.tvrecommendations
+disable com.realtek.leanbacklauncher.partnercustomizer
+disable android.autoinstalls.config.scbc.device
+disable com.google.android.feedback
+disable com.apps.function.gdpr
+disable com.seraphic.hbbtv.app
+
+say Step 3: shop-demo, commercial-display and unused extras
+disable com.apps.eshow
+disable com.apps.esticker
+disable com.mk.tv.digitalsignage
+disable com.mk.tv.meeting
+disable com.mk.tv.meeting.service
+disable com.mk.tv.timeclock
+disable com.android.printspooler
+disable com.android.wallpaper.livepicker
+disable com.google.android.play.games
+disable com.google.android.youtube.tvmusic
+
+say Step 4: art screensaver replaces Google Ambient mode
+setting secure screensaver_components tv.galleryhome/.ArtDream
+setting secure screensaver_default_component tv.galleryhome/.ArtDream
+disable com.google.android.backdrop
+
+say Step 5: faster animations
+setting global window_animation_scale 0.5
+setting global transition_animation_scale 0.5
+setting global animator_duration_scale 0.5
+
+say Step 6: switch off the stock launcher; if Home doesn't land on Gallery Home it is switched back on
+disable com.google.android.tvlauncher
+home tv.galleryhome/.HomeActivity
+key KEYCODE_HOME
+wait 6
+guard tv.galleryhome com.google.android.tvlauncher
+running tv.galleryhome
+shot 03-final-home

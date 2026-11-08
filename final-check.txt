@@ -1,0 +1,40 @@
+# final-check.txt — Gallery Home 2.0 "Gallery Wall" + final verification. Run: tv.sh apply final-check.txt
+say Installing Gallery Home 2.0 (Gallery Wall style)
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 12
+expect tv.galleryhome
+running tv.galleryhome
+shot 10-gallery-wall-evening
+key KEYCODE_DPAD_RIGHT
+wait 2
+shot 11-dock-focus-moved
+key KEYCODE_DPAD_LEFT
+say Daytime (cream wall) preview
+launch tv.galleryhome/.HomeActivity --es theme light
+wait 6
+shot 12-gallery-wall-daytime
+launch tv.galleryhome/.HomeActivity --es theme auto
+wait 3
+say HDMI & TV input picker
+action com.android.tv.action.VIEW_INPUTS
+wait 4
+shot 13-inputs-picker
+key KEYCODE_BACK
+wait 2
+key KEYCODE_HOME
+wait 3
+say Art screensaver
+launch com.android.systemui/.Somnambulator
+wait 20
+shot 14-screensaver
+key KEYCODE_HOME
+wait 4
+expect tv.galleryhome
+diag
+say Restore preview (dry run: shows what restore.sh would undo, changes nothing)
+restore-dry-run

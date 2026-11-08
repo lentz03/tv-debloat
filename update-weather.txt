@@ -1,0 +1,30 @@
+# update-weather.txt — Gallery Home 5.0: HKO weather (design 4) + warning badges; no corner brackets in the screensaver.
+# Run: tv.sh apply update-weather.txt   (uses test hooks only; never presses OK)
+say Installing Gallery Home 5.0
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 20
+expect tv.galleryhome
+running tv.galleryhome
+shot 80-weather-home
+say Sample warnings (test only) to check the badges
+launch tv.galleryhome/.HomeActivity --ez wxdemo true
+wait 3
+shot 81-weather-badges-demo
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 3
+shot 82-wallpaper-mode-weather
+key KEYCODE_BACK
+wait 1
+launch tv.galleryhome/.HomeActivity --ez wxdemo false
+wait 2
+say Screensaver (should have no corner brackets)
+launch com.android.systemui/.Somnambulator
+wait 15
+shot 83-screensaver-weather
+key KEYCODE_HOME
+wait 3
+expect tv.galleryhome
+diag

@@ -1,0 +1,55 @@
+# update-commute-look.txt — Gallery Home 5.4: route-line COMMUTE icon, dock edges no longer cut off,
+# board backgrounds you can pick (OK > Background), tidier overnight view.
+# Run: tv.sh apply update-commute-look.txt   (uses test hooks only; never presses OK)
+say Installing Gallery Home 5.4
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+say Dock: YouTube selected (left edge), COMMUTE selected, Settings selected (right edge)
+launch tv.galleryhome/.HomeActivity --ei focus 0
+wait 2
+shot 120-dock-youtube
+launch tv.galleryhome/.HomeActivity --ei focus 4
+wait 2
+shot 121-dock-commute
+launch tv.galleryhome/.HomeActivity --ei focus 9
+wait 2
+shot 122-dock-settings
+say Commute board, background: route map
+launch tv.galleryhome/.HomeActivity --es commutebg map --es open gh:commute
+wait 20
+shot 123-commute-map
+key KEYCODE_BACK
+wait 3
+say Commute board, background: ink
+launch tv.galleryhome/.HomeActivity --es commutebg ink --es open gh:commute
+wait 8
+shot 124-commute-ink
+key KEYCODE_BACK
+wait 3
+say Commute board, background: sharp and dark
+launch tv.galleryhome/.HomeActivity --es commutebg sharp --es open gh:commute
+wait 8
+shot 125-commute-sharp
+key KEYCODE_BACK
+wait 3
+say Commute board, background: LED board
+launch tv.galleryhome/.HomeActivity --es commutebg led --es open gh:commute
+wait 8
+shot 126-commute-led
+key KEYCODE_BACK
+wait 3
+say Commute board, background: blurred
+launch tv.galleryhome/.HomeActivity --es commutebg blur --es open gh:commute
+wait 8
+shot 127-commute-blur
+key KEYCODE_BACK
+wait 3
+launch tv.galleryhome/.HomeActivity --es commutebg map
+wait 2
+expect tv.galleryhome
+diag

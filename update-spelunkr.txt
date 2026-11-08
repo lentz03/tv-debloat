@@ -1,0 +1,32 @@
+# update-spelunkr.txt — Gallery Home 5.2: SPELUNKR in the dock (full-screen web player), Apple TV out.
+# Run: tv.sh apply update-spelunkr.txt   (uses test hooks only; never presses OK)
+say Installing Gallery Home 5.2 (SPELUNKR replaces Apple TV in the dock)
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+say Switching off the Apple TV app (reversible: restore.sh or tv.sh enable turns it back on)
+disable com.apple.atve.androidtv.appletv
+key KEYCODE_HOME
+wait 4
+launch tv.galleryhome/.HomeActivity --ei focus 4
+wait 3
+shot 100-dock-spelunkr
+say Opening SPELUNKR full screen (it should start playing a channel)
+launch tv.galleryhome/.HomeActivity --es open web:spelunkr
+wait 25
+shot 101-spelunkr
+say Pointer mode (MENU)
+key KEYCODE_MENU
+wait 2
+shot 102-spelunkr-pointer
+key KEYCODE_BACK
+wait 1
+say Back to the home screen
+key KEYCODE_HOME
+wait 4
+expect tv.galleryhome
+diag

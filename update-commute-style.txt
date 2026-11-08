@@ -1,0 +1,68 @@
+# update-commute-style.txt — Gallery Home 5.5: journey styles (line / steps with route), new backgrounds,
+# no route-map clash, bus stops named "Healthy Gardens". Run: tv.sh apply update-commute-style.txt (never presses OK)
+say Installing Gallery Home 5.5
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+say Journey line (A) on Ink
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg ink --es open gh:commute
+wait 20
+shot 130-journey-line
+key KEYCODE_BACK
+wait 3
+say Steps with route (E) on Ink
+launch tv.galleryhome/.HomeActivity --es commutejourney glyphs --es open gh:commute
+wait 8
+shot 131-journey-glyphs
+key KEYCODE_BACK
+wait 3
+say Background: sky by the hour
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg sky --es open gh:commute
+wait 8
+shot 132-bg-sky
+key KEYCODE_BACK
+wait 3
+say Background: weather
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg weather --es open gh:commute
+wait 8
+shot 133-bg-weather
+key KEYCODE_BACK
+wait 3
+say Background: contours
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg contours --es open gh:commute
+wait 8
+shot 134-bg-contours
+key KEYCODE_BACK
+wait 3
+say Background: light trails
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg trails --es open gh:commute
+wait 8
+shot 135-bg-trails
+key KEYCODE_BACK
+wait 3
+say Background: skyline
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg skyline --es open gh:commute
+wait 8
+shot 136-bg-skyline
+key KEYCODE_BACK
+wait 3
+say Background: sharp and dark
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg sharp --es open gh:commute
+wait 8
+shot 137-bg-sharp
+key KEYCODE_BACK
+wait 3
+say Background: LED board
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg led --es open gh:commute
+wait 8
+shot 138-bg-led
+key KEYCODE_BACK
+wait 3
+launch tv.galleryhome/.HomeActivity --es commutejourney line --es commutebg ink
+wait 2
+expect tv.galleryhome
+diag

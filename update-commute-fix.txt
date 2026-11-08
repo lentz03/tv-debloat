@@ -1,0 +1,22 @@
+# update-commute-fix.txt — Gallery Home 5.3.1: fixes the crash ~8 s after opening COMMUTE (or any app).
+# Run: tv.sh apply update-commute-fix.txt   (uses test hooks only; never presses OK)
+say Installing Gallery Home 5.3.1
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+running tv.galleryhome
+say Opening the commute board and staying on it for 40 seconds (the crash used to come after 8)
+launch tv.galleryhome/.HomeActivity --es open gh:commute
+wait 20
+shot 113-commute
+wait 20
+expect CommuteActivity
+shot 114-commute-40s
+running tv.galleryhome
+key KEYCODE_BACK
+wait 3
+expect tv.galleryhome
+diag
