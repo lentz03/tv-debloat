@@ -1,0 +1,54 @@
+# update-artvee-3.txt — Gallery Home 5.6.2: Japanese prints fixed (page 1 address), true page counts,
+# no nudes on Amber nights (figurative/mythology swapped for still life), text-heavy posters skipped. (never presses OK)
+say Installing Gallery Home 5.6.2
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 15
+expect tv.galleryhome
+say Wallpaper: Artvee landscapes
+launch tv.galleryhome/.HomeActivity --es wallpapers av-landscape
+wait 50
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 165-av-landscape
+key KEYCODE_BACK
+wait 2
+say Wallpaper: Japanese prints
+launch tv.galleryhome/.HomeActivity --es wallpapers av-asian
+wait 50
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 166-av-asian
+key KEYCODE_BACK
+wait 2
+say Wallpaper: vintage posters
+launch tv.galleryhome/.HomeActivity --es wallpapers av-posters
+wait 50
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 167-av-posters
+key KEYCODE_BACK
+wait 2
+say Wallpaper: illustrations
+launch tv.galleryhome/.HomeActivity --es wallpapers av-illustration
+wait 50
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 168-av-illustration
+key KEYCODE_BACK
+wait 2
+say Wallpaper: amber nights
+launch tv.galleryhome/.HomeActivity --es wallpapers av-amber
+wait 50
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 169-av-amber
+key KEYCODE_BACK
+wait 2
+say All wallpapers on: Space, Night cities, Dark landscapes + the five Artvee sets
+launch tv.galleryhome/.HomeActivity --es wallpapers space,city,dark,av-landscape,av-asian,av-posters,av-illustration,av-amber
+wait 5
+expect tv.galleryhome
+diag

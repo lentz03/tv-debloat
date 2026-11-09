@@ -62,7 +62,7 @@ public class HomeActivity extends Activity {
     private List<AppRepo.App> apps = new ArrayList<>();
     private final Map<String, AppRepo.App> appByPkg = new HashMap<>();
 
-    private boolean resumed, loadingArt, firstAppLoad = true;
+    private boolean resumed, loadingArt, artAgain, firstAppLoad = true;
     private boolean ambient, swallowKeyUp;
     private final List<View> hud = new ArrayList<>();
     private LinearLayout ambientBox;
@@ -72,6 +72,13 @@ public class HomeActivity extends Activity {
     private boolean orbs;                 // true for line + orbs: tall Big Shoulders clock top-right, caption top-left
     private TextView focusLabel;
     private long lastArtAt;
+    private float artDim = 1f;            // extra dimming for the current picture (bright prints and posters)
+
+    /** Wallpaper brightness right now: the setting, a bit brighter in wallpaper mode, times the picture's own dimming. */
+    private float wallBrightness(float pictureDim) {
+        float b = ambient ? Math.min(0.85f, prefs.brightness() + 0.15f) : prefs.brightness();
+        return b * pictureDim;
+    }
     private NestViews.Panel nestPanel;     // Nest Mini mini player under the forecast
     private NestViews.Line ambNest;        // its one-line version in wallpaper mode
     private View lastDockFocus;
@@ -140,6 +147,10 @@ public class HomeActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (intent != null && intent.getBooleanExtra("dumplog", false)) {
+            bg.execute(new Runnable() { @Override public void run() { art.dumpLog(); } });
+            return;
+        }
         if (applyExtras(intent)) loadArt(false);
         hideOverlay();
         if (intent != null && intent.getBooleanExtra("ambient", false)) { enterAmbient(); return; }
@@ -186,9 +197,8 @@ public class HomeActivity extends Activity {
         if (ambient) return;
         ambient = true;
         for (View v : hud) v.animate().alpha(0f).setDuration(500).start();
-        float b = Math.min(0.85f, prefs.brightness() + 0.15f);
-        Noir.dim(bgFront, b);
-        Noir.dim(bgBack, b);
+        Noir.dim(bgFront, wallBrightness(artDim));
+        Noir.dim(bgBack, wallBrightness(artDim));
         ambTitle.setText(prefs.captions() ? curTitle : "");
         ambCredit.setText(prefs.captions() ? curCredit.replace("  ·  ", " · ").toUpperCase(Locale.getDefault()) : "");
         ambClock.setText(clock.getText());
@@ -201,8 +211,8 @@ public class HomeActivity extends Activity {
         if (!ambient) return;
         ambient = false;
         for (View v : hud) v.animate().alpha(1f).setDuration(300).start();
-        Noir.dim(bgFront, prefs.brightness());
-        Noir.dim(bgBack, prefs.brightness());
+        Noir.dim(bgFront, wallBrightness(artDim));
+        Noir.dim(bgBack, wallBrightness(artDim));
         ambientBox.setVisibility(View.GONE);
         for (int i = 0; i < dock.getChildCount(); i++) {
             if ("util:0".equals(dock.getChildAt(i).getTag())) { dock.getChildAt(i).requestFocus(); return; }
@@ -943,12 +953,15 @@ public class HomeActivity extends Activity {
         dialog("Gallery Home", labels, acts);
     }
 
-    private static final String[] KIND_NAMES = {"Space (NASA)", "Night cities & architecture", "Dark landscapes", "Museum paintings"};
+    private static final String[] KIND_NAMES = {"Space (NASA)", "Night cities & architecture", "Dark landscapes", "Museum paintings",
+            "Artvee · Landscapes", "Japanese prints · Artvee & museums", "Artvee · Vintage posters", "Artvee · Illustrations & engravings",
+            "Artvee · Amber nights (warm, for your room)"};
 
     private static String wallpaperNames(List<String> ks) {
         List<String> n = new ArrayList<>();
         for (int i = 0; i < Art.KINDS.length; i++) {
-            if (ks.contains(Art.KINDS[i])) n.add(KIND_NAMES[i].replace(" (NASA)", "").replace(" & architecture", ""));
+            if (ks.contains(Art.KINDS[i])) n.add(KIND_NAMES[i].replace(" (NASA)", "").replace(" & architecture", "")
+                    .replace("Artvee · ", "").replace(" (warm, for your room)", "").replace(" & engravings", ""));
         }
         return android.text.TextUtils.join(", ", n);
     }
@@ -996,8 +1009,8 @@ public class HomeActivity extends Activity {
             l.add(names[i]);
             r.add(new Runnable() { public void run() {
                 prefs.setBrightness(v);
-                Noir.dim(bgFront, v);
-                Noir.dim(bgBack, v);
+                Noir.dim(bgFront, wallBrightness(artDim));
+                Noir.dim(bgBack, wallBrightness(artDim));
             } });
         }
         dialog("Wallpaper brightness", l, r);
@@ -1081,7 +1094,10 @@ public class HomeActivity extends Activity {
     }
 
     private void loadArt(final boolean cachedFirst) {
-        if (loadingArt) return;
+        if (loadingArt) {                       // e.g. the wallpaper sets changed mid-download: load again when this one is done
+            if (!cachedFirst) artAgain = true;
+            return;
+        }
         loadingArt = true;
         final String source = prefs.source();
         bg.execute(new Runnable() {
@@ -1095,7 +1111,9 @@ public class HomeActivity extends Activity {
                 ui.post(new Runnable() {
                     @Override public void run() {
                         loadingArt = false;
-                        if (result != null) showArt(result);
+                        boolean stale = !source.equals(prefs.source());
+                        if (result != null && !(stale && artAgain)) showArt(result);
+                        if (artAgain) { artAgain = false; loadArt(false); }
                     }
                 });
             }
@@ -1106,10 +1124,14 @@ public class HomeActivity extends Activity {
     private void showArt(Art.Item it) {
         lastArtAt = System.currentTimeMillis();
         final Bitmap bmp = it.bitmap;
+        final float dim = it.dim;
         bgFront.animate().cancel();
         bgBack.setImageBitmap(bmp);
+        Noir.dim(bgBack, wallBrightness(dim));          // the new picture fades in at its own brightness
         bgFront.animate().alpha(0f).setDuration(1400).withEndAction(new Runnable() {
             @Override public void run() {
+                artDim = dim;
+                Noir.dim(bgFront, wallBrightness(dim));
                 bgFront.setImageBitmap(bmp);
                 bgFront.setAlpha(1f);
                 bgBack.setImageDrawable(null);

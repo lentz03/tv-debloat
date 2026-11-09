@@ -316,6 +316,9 @@ cmd_diag() {
     echo "== logcat (GalleryHome / crashes / network security)"
     sh_ logcat -d -v time | grep -iE 'GalleryHome|tv\.galleryhome|FATAL|AndroidRuntime|SSL|CertPath|cleartext' | tail -150
     echo "== art cache"; sh_ run-as tv.galleryhome ls -la cache/art 2>&1 | head
+    echo "== art log (Gallery Home re-logs its saved wallpaper notes)"
+    sh_ am start -n tv.galleryhome/.HomeActivity --ez dumplog true >/dev/null; sleep 3
+    sh_ logcat -d -v time | grep 'GalleryHome.*artlog' | sed 's/.*artlog //' | tail -80; echo
     echo "== dns/ping"; for h in api.artic.edu www.artic.edu commons.wikimedia.org upload.wikimedia.org; do
       echo "$h: $(sh_ ping -c1 -W2 "$h" | head -2 | tail -1)"; done
     echo "== date/time on TV"; sh_ date

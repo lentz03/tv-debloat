@@ -1,0 +1,22 @@
+# update-artvee-7.txt — Gallery Home 5.6.6: Japanese prints from the Art Institute of Chicago and Cleveland Museum of Art when Artvee's listing is empty.
+# Tests only that set (about 2 minutes), then turns all wallpaper sets back on. (never presses OK)
+say Installing Gallery Home 5.6.6
+install GalleryHome.apk tv.galleryhome
+key KEYCODE_BACK
+wait 1
+key KEYCODE_HOME
+wait 20
+expect tv.galleryhome
+say Wallpaper: Japanese prints
+launch tv.galleryhome/.HomeActivity --es wallpapers av-asian
+wait 75
+launch tv.galleryhome/.HomeActivity --ez ambient true
+wait 4
+shot 181-av-asian
+key KEYCODE_BACK
+wait 2
+say All wallpapers on: Space, Night cities, Dark landscapes + the five Artvee sets
+launch tv.galleryhome/.HomeActivity --es wallpapers space,city,dark,av-landscape,av-asian,av-posters,av-illustration,av-amber
+wait 5
+expect tv.galleryhome
+diag

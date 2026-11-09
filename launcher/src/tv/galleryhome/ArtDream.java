@@ -159,10 +159,13 @@ public class ArtDream extends DreamService {
 
     private void show(Art.Item it) {
         final Bitmap bmp = it.bitmap;
+        final float b = Math.min(0.85f, prefs.brightness() + 0.15f) * it.dim;   // bright prints are dimmed a little more
         front.animate().cancel();
         back.setImageBitmap(bmp);
+        Noir.dim(back, b);
         front.animate().alpha(0f).setDuration(2000).withEndAction(new Runnable() {
             @Override public void run() {
+                Noir.dim(front, b);
                 front.setImageBitmap(bmp);
                 front.setAlpha(1f);
                 back.setImageDrawable(null);
