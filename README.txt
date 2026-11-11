@@ -11,7 +11,7 @@ WHAT WAS CHANGED (every change is logged in tv-backup-*/changes.log)
   Settings: animations 0.5x (window, transition, animator), screensaver -> Gallery Home
   Installed: Gallery Home (tv.galleryhome) as the home screen
 
-GALLERY HOME 5.6.1 (GalleryHome.apk, source in launcher-src.zip)
+GALLERY HOME 5.6.6 (GalleryHome.apk, source in launcher/; full guide in README.md)
   Style "Logo Line": white app logos on a hairline, amber line on the focused app,
   Big Shoulders clock, rotating wallpapers: Space (NASA), Night cities, Dark landscapes.
   - Hold OK (or Menu) on an app: move left/right, remove, app info
@@ -19,9 +19,10 @@ GALLERY HOME 5.6.1 (GalleryHome.apk, source in launcher-src.zip)
   - WALLPAPER: hides everything but the picture; press any button to come back
   - HDMI · TV: the TV's input picker
   - Wallpapers (Settings > Wallpapers, tick any mix): Space (NASA), Night cities, Dark landscapes,
-    Museum paintings, and from Artvee (artvee.com, public domain): Landscapes, Japanese prints,
-    Vintage posters, Illustrations & engravings, Amber nights (warm, dark night scenes picked to suit
-    the room's orange lights). Bright prints and posters are dimmed a little extra so the clock stays readable.
+    Museum paintings, and from Artvee (artvee.com, public domain): Landscapes, Vintage posters (1950 or
+    earlier), Illustrations & engravings, Amber nights (warm, dark pictures picked to suit the room's
+    orange lights). Japanese prints come from the Art Institute of Chicago and Cleveland Museum of Art
+    (Artvee's Asian Art listing is empty for this TV). Bright prints and posters are dimmed a little extra so the clock stays readable.
   - SETTINGS: next wallpaper, which wallpapers, how often, brightness, captions,
     style (Logo Line / Glass Orbs / Noir HUD), weather on/off, mini player on/off,
     reset dock, Android TV settings
